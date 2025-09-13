@@ -1,0 +1,191 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        /* animated gradient */
+        background-size: 200% 200%;
+        animation: gradientShift 10s ease infinite;
+    }
+
+    .form-box {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        width: 420px;
+        padding: 35px;
+        border-radius: 18px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+        animation: slideIn 0.8s ease, floatUp 6s ease-in-out infinite;
+        position: relative;
+        overflow: hidden;
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 28px;
+        color: #2c3e50;
+        margin-bottom: 25px;
+        letter-spacing: 1px;
+    }
+
+    label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: #34495e;
+    }
+
+    input[type="text"],
+    select {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 18px;
+        border: none;
+        border-radius: 10px;
+        font-size: 15px;
+        box-shadow: inset 0 2px 6px rgba(0,0,0,0.1);
+        transition: 0.3s ease;
+        background: #fff;
+    }
+
+    input[type="text"]:focus,
+    select:focus {
+        border: 2px solid #6c63ff;
+        box-shadow: 0 0 10px rgba(108, 99, 255, 0.4);
+        outline: none;
+        transform: scale(1.02);
+    }
+
+    input[type="text"]:hover,
+    select:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 8px rgba(108, 99, 255, 0.3);
+    }
+
+    .button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 10px;
+        font-size: 17px;
+        font-weight: bold;
+        cursor: pointer;
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        color: #fff;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .button:hover {
+        transform: translateY(-2px) scale(1.05);
+        background: linear-gradient(135deg, #2575fc, #6a11cb);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    }
+
+    /* shiny light sweep */
+    .button::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 50%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: skewX(-25deg);
+        transition: 0.5s;
+    }
+    .button:hover::after {
+        left: 150%;
+    }
+
+    .red {
+        display: block;
+        margin-top: 15px;
+        background: #e74c3c;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .red:hover {
+        background: #c0392b;
+    }
+
+    /* glowing border around form */
+    .form-box::before {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(135deg, #6a11cb, #2575fc, #ff6ec4, #6a11cb);
+        background-size: 300% 300%;
+        z-index: -1;
+        filter: blur(8px);
+        opacity: 0.4;
+        animation: glowing 8s linear infinite;
+        border-radius: 20px;
+    }
+
+    /* animations */
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateY(-30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes floatUp {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    @keyframes glowing {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+</style>
+
+<div class="form-box">
+    <h2>➕ Add New Student</h2>
+
+    <form method="POST" action="{{ url_for('add_student') }}">
+        <label for="name">Student Name:</label><br>
+        <input type="text" name="name" required><br><br>
+
+        <label for="roll">Roll Number:</label><br>
+        <input type="text" name="roll" required><br><br>
+
+        <label for="department">Department:</label><br>
+        <select name="department" required>
+            <option value="" disabled selected>-- Select Department --</option>
+            <option value="CSE">Computer Science</option>
+            <option value="ECE">Electronics & Communication</option>
+            <option value="EEE">Electrical Engineering</option>
+            <option value="ME">Mechanical Engineering</option>
+            <option value="CE">Civil Engineering</option>
+            <option value="IT">Information Technology</option>
+        </select><br><br>
+
+        <button type="submit" class="button">✅ Add Student</button>
+    </form>
+
+    <a href="{{ url_for('dashboard') }}" class="button red">⬅ Back to Dashboard</a>
+</div>
+
+{% endblock %}

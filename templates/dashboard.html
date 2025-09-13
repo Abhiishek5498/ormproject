@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card">Total Students<br><b>{{ total }}</b></div>
+<div class="card">Present Today<br><b>{{ present }}</b></div>
+<div class="card">Absent Today<br><b>{{ absent }}</b></div>
+<div class="card">Average Hours<br><b>{{ avg_hours }}h</b></div>
+
+<h3>Today's Attendance</h3>
+<a href="{{ url_for('add_student') }}" class="button">➕ Add Student</a>
+<a href="{{ url_for('report') }}" class="button">📊 View Report</a>
+
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Roll No</th>
+        <th>Department</th>
+        <th>Check In</th>
+        <th>Check Out</th>
+        <th>Actions</th>
+    </tr>
+    {% for student in attendance_list %}
+    <tr>
+        <td>{{ student[1] }}</td>
+        <td>{{ student[2] }}</td>
+        <td>{{ student[3] }}</td>
+        <td>{{ student[4] if student[4] else "-" }}</td>
+        <td>{{ student[5] if student[5] else "-" }}</td>
+        <td>
+            <a href="{{ url_for('checkin', student_id=student[0]) }}" class="button">Check In</a>
+            <a href="{{ url_for('checkout', student_id=student[0]) }}" class="button red">Check Out</a>
+            <a href="{{ url_for('delete_student', student_id=student[0]) }}"
+               class="button red" onclick="return confirm('Delete this student?')">
+               Delete
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
