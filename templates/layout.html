@@ -6,9 +6,38 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <header>📘 Student Attendance Management System</header>
-    <div class="container">
-        {% block content %}{% endblock %}
+<header>
+    📘 Student Attendance Management System
+    <div style="float:right; margin-top:-25px; margin-right:15px;">
+        {% if session.get('admin') %}
+            👤 {{ session['admin'] }} |
+            <a href="{{ url_for('logout') }}" class="button red">Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}" class="button">Login</a>
+            <a href="{{ url_for('signup') }}" class="button">Sign Up</a>
+        {% endif %}
     </div>
+</header>
+
+<!-- Flash messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div style="margin:10px;">
+      {% for category, message in messages %}
+        <div style="padding:10px; margin-bottom:5px; border-radius:5px;
+                    background-color:{% if category=='success' %}#d4edda
+                                     {% elif category=='danger' %}#f8d7da
+                                     {% elif category=='warning' %}#fff3cd
+                                     {% else %}#cce5ff{% endif %};">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
 </body>
 </html>

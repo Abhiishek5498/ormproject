@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>👨‍🎓 Attendance Records for {{ student[0] }} ({{ student[1] }}) - {{ student[2] }}</h2>
+<a href="{{ url_for('dashboard') }}" class="button">⬅ Back to Dashboard</a>
+
+<table class="table">
+    <tr>
+        <th>Date</th>
+        <th>Day</th>
+        <th>Check In</th>
+        <th>Check Out</th>
+    </tr>
+    {% for rec in records %}
+    <tr>
+        {% set date = rec[0][:10] if rec[0] else "-" %}
+        {% set checkin = rec[0][11:] if rec[0] else "-" %}
+        {% set checkout = rec[1][11:] if rec[1] else "-" %}
+        <td>{{ date }}</td>
+        <td>{{ date | datetimeformat("%A") if rec[0] else "-" }}</td>
+        <td>{{ checkin }}</td>
+        <td>{{ checkout }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

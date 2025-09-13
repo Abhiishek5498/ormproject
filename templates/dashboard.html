@@ -28,6 +28,7 @@
         <td>
             <a href="{{ url_for('checkin', student_id=student[0]) }}" class="button">Check In</a>
             <a href="{{ url_for('checkout', student_id=student[0]) }}" class="button red">Check Out</a>
+            <a href="{{ url_for('view_attendance', student_id=student[0]) }}" class="button">👁 View</a>
             <a href="{{ url_for('delete_student', student_id=student[0]) }}"
                class="button red" onclick="return confirm('Delete this student?')">
                Delete
